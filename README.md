@@ -1,2 +1,2 @@
 # Bookstore
-Bookstore application
+Bookstore application using the MERN stack
