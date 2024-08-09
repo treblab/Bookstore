@@ -4,6 +4,7 @@ import Spinner from '../components/Spinner';
 import axios from 'axios';
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
+import { useSnackbar } from 'notistack';
 
 const EditBook = () => {
     const [title, setTitle] = useState('');
@@ -12,6 +13,7 @@ const EditBook = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { id } = useParams();
+    const { enqueueSnackbar } = useSnackbar();
     
     useEffect(() => {
         setLoading(true);
@@ -21,10 +23,12 @@ const EditBook = () => {
                 setTitle(response.data.title);
                 setAuthor(response.data.author);
                 setPublishYear(response.data.publishYear);
+                enqueueSnackbar('Book edited successfully.', { variant: 'success' });
                 setLoading(false);
             })
             .catch((error) => {
-                alert('An error occurred. Please try again.');
+                // alert('An error occurred. Please try again.');
+                enqueueSnackbar('Error - unable apply edit.', { variant: 'error' });
                 console.error('Error fetching book: ', error);
                 setLoading(false);
             });
